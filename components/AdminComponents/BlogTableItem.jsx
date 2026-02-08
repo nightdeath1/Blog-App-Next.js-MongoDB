@@ -8,6 +8,7 @@ const BlogTableItem = ({
   author,
   date,
   deleteBlog,
+  editBlog,
   mongoId,
 }) => {
   const BlogDate = new Date(date);
@@ -39,9 +40,7 @@ const BlogTableItem = ({
         <div className="flex gap-4 items-center">
           <button
             className="text-blue-600 hover:underline"
-            onClick={() =>
-              (window.location.href = `/admin/addProduct?id=${mongoId}`)
-            }
+            onClick={() => editBlog(mongoId)}
           >
             Edit
           </button>

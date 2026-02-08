@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function AddProductClient() {
+export default function AddBlogClient() {
   const searchParams = useSearchParams();
   const blogId = searchParams.get("id");
   const router = useRouter();
@@ -18,7 +18,6 @@ export default function AddProductClient() {
     description: "",
     category: "Startup",
     author: "Eugene Ti",
-    authorImg: "/author_img.png",
   });
 
   useEffect(() => {
@@ -30,7 +29,6 @@ export default function AddProductClient() {
           description: blog.description,
           category: blog.category,
           author: blog.author,
-          authorImg: blog.authorImg || "/author_img.png",
         });
         setImage(blog.image || false);
       });

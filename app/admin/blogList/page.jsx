@@ -5,10 +5,12 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import authorImg from '@/assets/profile-photo.jpg';
 import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation';
 
 
 const Page = () => {
   const [blogs, setBlogs] = useState([]);
+  const router = useRouter();
 
   const fetchBlogs = async () => {
     const response = await axios.get("/api/blog");
@@ -23,8 +25,10 @@ const Page = () => {
     })
     toast.success(response.data.msg)
     fetchBlogs();
+  }
 
-
+  const editBlog = (mongoId) => {
+    router.push(`/admin/addBlog?id=${mongoId}`);
   }
 
   useEffect(() => {
@@ -63,6 +67,7 @@ const Page = () => {
                   authorImg={authorImg}
                   date={item.date}
                   deleteBlog={deleteBlog}
+                  editBlog={editBlog}
                 />
               );
             })}
