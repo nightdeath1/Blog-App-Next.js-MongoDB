@@ -12,7 +12,7 @@ const page = () => {
     title: "",
     description: "",
     category: "Startup",
-    author: "Alex Bennett",
+    author: "Eugene Ti",
     authorImg: "/author_img.png",
   });
 
@@ -43,7 +43,7 @@ if (response.data.success) {
       title: "",
       description: "",
       category: "Startup",
-      author: "Alex Bennett",
+      author: "Eugene Ti",
       authorImg: "/author_img.png",
     })
 }
