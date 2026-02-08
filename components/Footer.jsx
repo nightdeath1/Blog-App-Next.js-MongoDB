@@ -8,9 +8,9 @@ const Footer = () => {
       <Image src={assets.logo_light} alt="footer" width={120} />
       <p className='text-sm text-white'>&copy; {new Date().getFullYear()} Blogger. All rights reserved.</p>
       <div className='flex'>
-        <Image src={assets.facebook_icon} alt='' width={40} /> 
-        <Image src={assets.twitter_icon} alt='' width={40} /> 
-        <Image src={assets.googleplus_icon} alt='' width={40} /> 
+        <Image src={assets.facebook_icon} alt='facebook' width={40} /> 
+        <Image src={assets.twitter_icon} alt='twitter' width={40} /> 
+        <Image src={assets.googleplus_icon} alt='google' width={40} /> 
       </div>
     </div>
   );

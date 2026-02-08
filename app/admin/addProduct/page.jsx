@@ -64,7 +64,7 @@ else {
             src={image ? URL.createObjectURL(image) : assets.upload_area}
             width={140}
             height={70}
-            alt=""
+            alt="thumbnail"
           />
         </label>
         <input
