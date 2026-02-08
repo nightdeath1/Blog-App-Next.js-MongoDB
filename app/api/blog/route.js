@@ -4,13 +4,13 @@ const { NextResponse } = require("next/server");
 import { writeFile } from "fs/promises";
 const fs = require('fs');
 
+// Connect to DB
 const LoadDB = async () => {
   await ConnectDB();
 };
-
 LoadDB();
 
-// API Endpoint to get all blogs
+// GET: Get all blogs or single blog
 export async function GET(request) {
   const blogId = request.nextUrl.searchParams.get("id");
   if (blogId) {
@@ -22,39 +22,32 @@ export async function GET(request) {
   }
 }
 
-// API Endpoint for Uploading Blogs
+// POST: Add new blog
 export async function POST(request) {
   try {
     const formData = await request.formData();
     const timestamp = Date.now();
     let imgUrl = null;
 
-    // Check if the image is provided in the form data
     const image = formData.get("image");
-
     if (image) {
-      // If an image is provided, process and save it
-      const imageByteData = await image.arrayBuffer();
-      const buffer = Buffer.from(imageByteData);
+      const buffer = Buffer.from(await image.arrayBuffer());
       const path = `./public/${timestamp}_${image.name}`;
       await writeFile(path, buffer);
       imgUrl = `/${timestamp}_${image.name}`;
     }
 
-    // Prepare the blog data (skip image if not provided)
     const blogData = {
-      title: `${formData.get("title")}`,
-      description: `${formData.get("description")}`,
-      category: `${formData.get("category")}`,
-      author: `${formData.get("author")}`,
-      image: imgUrl, // This will be null if no image is provided
-      authorImg: `${formData.get("authorImg")}`,
+      title: formData.get("title"),
+      description: formData.get("description"),
+      category: formData.get("category"),
+      author: formData.get("author"),
+      image: imgUrl,
+      authorImg: formData.get("authorImg"),
     };
 
-    // Save blog data to the database
     await BlogModel.create(blogData);
     console.log("Blog Saved");
-
     return NextResponse.json({ success: true, msg: "Blog Added" });
   } catch (error) {
     console.error("Error saving blog:", error);
@@ -62,13 +55,42 @@ export async function POST(request) {
   }
 }
 
-
-// Creating API Endpoint to delete Blog
-
+// DELETE: Remove blog
 export async function DELETE(request) {
-const id = await request.nextUrl.searchParams.get('id');
-const blog = await BlogModel.findById(id);
-fs.unlink(`./public${blog.image}`, () => {});
-await BlogModel.findByIdAndDelete(id);
-return NextResponse.json({msg: "Blog Deleted"})
-} 
+  const id = request.nextUrl.searchParams.get("id");
+  const blog = await BlogModel.findById(id);
+  if (blog?.image) fs.unlink(`./public${blog.image}`, () => {});
+  await BlogModel.findByIdAndDelete(id);
+  return NextResponse.json({ msg: "Blog Deleted" });
+}
+
+// PUT: Edit blog
+export async function PUT(request) {
+  try {
+    const blogId = request.nextUrl.searchParams.get("id");
+    const formData = await request.formData();
+
+    const updatedData = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+      category: formData.get("category"),
+      author: formData.get("author"),
+      authorImg: formData.get("authorImg"),
+    };
+
+    const image = formData.get("image");
+    if (image) {
+      const buffer = Buffer.from(await image.arrayBuffer());
+      const timestamp = Date.now();
+      const path = `./public/${timestamp}_${image.name}`;
+      await writeFile(path, buffer);
+      updatedData.image = `/${timestamp}_${image.name}`;
+    }
+
+    await BlogModel.findByIdAndUpdate(blogId, updatedData);
+    return NextResponse.json({ success: true, msg: "Blog Updated" });
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    return NextResponse.json({ success: false, msg: "Error updating blog" });
+  }
+}

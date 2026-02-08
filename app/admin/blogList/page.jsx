@@ -3,7 +3,7 @@
 import BlogTableItem from "@/components/AdminComponents/BlogTableItem";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import authorImg from '@/assets/profile_icon.png';
+import authorImg from '@/assets/profile-photo.jpg';
 import { toast } from "react-toastify";
 
 
