@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 
-const page = () => {
+const Page = () => {
 
   const [emails, setEmails] = useState([]);
 
@@ -68,4 +68,4 @@ return <SubsTableItem key={index} mongoId={item._id} email={item.email} date={it
 )}
 
 
-export default page
+export default Page
