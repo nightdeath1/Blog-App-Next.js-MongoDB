@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import authorImg from "@/assets/profile_icon.png";
+import authorImg from "@/assets/profile-photo.jpg";
 
 export default function Page({ params }) {
   const { id } = React.use(params);
