@@ -3,7 +3,7 @@ import "./globals.css";
 
 const outfit = Outfit({
   subsets: ["latin"],
-  weight:["400","500","600","700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -14,9 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={outfit.className}
-      >
+      <body className={`${outfit.className} min-h-screen flex flex-col`}>
         {children}
       </body>
     </html>

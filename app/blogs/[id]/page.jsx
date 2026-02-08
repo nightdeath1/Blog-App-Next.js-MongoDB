@@ -9,8 +9,8 @@ import React, { useEffect, useState } from "react";
 import authorImg from "@/assets/profile_icon.png";
 
 export default function Page({ params }) {
+  const { id } = React.use(params);
   const [data, setData] = useState(null);
-  const id = params?.id;
 
   useEffect(() => {
     if (!id) return;
